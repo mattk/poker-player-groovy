@@ -17,8 +17,10 @@ class PostFlopPlayer extends Player
 {
     static int betAmount(final game)
     {
-        if (ranking(game) > 3)
+        if (ranking(game) > 1)
             return ALLIN;
+        if (ranking(game) == 1)
+            return callAmount(game);
         return 0;
     }
 
