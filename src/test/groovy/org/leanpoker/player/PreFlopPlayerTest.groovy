@@ -16,18 +16,18 @@ class PreFlopPlayerTest extends Specification
         def result = Player.betRequest(gameState)
 
         then:
-        result == 140
+        result == 0
     }
 
-    def "22 hole pair all-in"()
+    def "AA hole pair all-in"()
     {
         given:
         def gameState = new JsonSlurper().parseText(json)
         def Object me = gameState.players[gameState.in_action]
         when:
         def holeCards = me.hole_cards
-        holeCards[0].rank = '2'
-        holeCards[1].rank = '2'
+        holeCards[0].rank = 'A'
+        holeCards[1].rank = 'A'
         then:
         Player.betRequest(gameState) == Player.ALLIN
     }
@@ -80,4 +80,23 @@ class PreFlopPlayerTest extends Specification
         then:
         PreFlopPlayer.countCoolCards(holeCards) == 1
     }
+    def "safe call amount"() {
+        when:
+        def result = PreFlopPlayer.safeCallAmount(1000, 300, 1)
+        then:
+        result == true
+    }
+    def "safe call amount, low cash"() {
+        when:
+        def result = PreFlopPlayer.safeCallAmount(500, 300, 4)
+        then:
+        result == false
+    }
+    def "safe call amount, crappy cards"() {
+        when:
+        def result = PreFlopPlayer.safeCallAmount(1000, 50, 10)
+        then:
+        result == false
+    }
+
 }
