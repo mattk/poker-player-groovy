@@ -2,7 +2,7 @@ package org.leanpoker.player
 
 class Player {
 
-    static final String VERSION = 'Default Groovy folding player';
+    static final String VERSION = 'V 1';
 
     static final RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
     public static final int ALLIN = 3000
