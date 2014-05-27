@@ -1,41 +1,19 @@
 {
     "small_blind": 10,                              
-                                                    
-
-    "current_buy_in": 320,                          
-
-    "pot": 400,                                     
-
-    "minimum_raise": 240,                           
-                                                    
-
-    "dealer": 1,                                    
-                                                    
-
-    "orbits": 7,                                    
-                                                    
-
-    "in_action": 1,                                 
-
-    "players": [                                    
+    "current_buy_in": 320,
+    "pot": 400,
+    "minimum_raise": 240,
+    "dealer": 1,
+    "orbits": 7,
+    "in_action": 1,
+    "players": [
         {                                           
-
-            "id": 0,                                
-
-            "name": "Albert",                       
-
-            "status": "active",                     
-                                                    
-                                                    
-                                                    
-                                                    
-
-            "version": "Default random player",     
-
-            "stack": 1010,                          
-                                                    
-
-            "bet": 320                              
+            "id": 0,
+            "name": "Albert",
+            "status": "active",
+            "version": "Default random player",
+            "stack": 1010,
+            "bet": 320
         },
         {
             "id": 1,                                
