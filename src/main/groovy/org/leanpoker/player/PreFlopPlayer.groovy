@@ -11,8 +11,15 @@ class PreFlopPlayer extends Player {
         def ranksEqual = areRanksEqual(holeCards)
         def score = scoreHand(holeCards)
         
-        if (score < 3)
-            return ALLIN;
+        if (score < 3) {
+            if (Math.random() > 0.5) {
+                return ALLIN;
+            }
+            if(callAmount(game) < game.small_blind *4) {
+                return game.small_blind *4
+            }
+            return callAmount(game)
+        }
 
         if (safeCallAmount(me.stack,callAmount(game), score))
             return callAmount(game);
@@ -22,6 +29,8 @@ class PreFlopPlayer extends Player {
     }
 
     static Boolean safeCallAmount(def stack,def callAmount,def score) {
+        if(score >= 8) return false
+
         return Math.max(stack/(2+score*score),30.0f-(2*score)) > callAmount
     }
 
