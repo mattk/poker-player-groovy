@@ -27,7 +27,7 @@ class PreFlopPlayer extends Player {
             return callAmount(game)
 
         if(Math.random()< 0.25 && callAmount(game) < (7*game.small_blind)) {
-            return Math.min(callAmount(game), Integer.valueOf(Math.random() * 0.7 * game.small_blind));
+            return Math.min(callAmount(game), Math.random() * 0.7 * game.small_blind);
 
         }
         if(score <=6 && Math.random() > 0.65) {
