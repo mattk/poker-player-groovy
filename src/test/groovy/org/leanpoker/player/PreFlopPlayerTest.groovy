@@ -98,5 +98,11 @@ class PreFlopPlayerTest extends Specification
         then:
         result == false
     }
+    def "safe call amount, lower pair"() {
+        when:
+        def result = PreFlopPlayer.safeCallAmount(1000, 40, 6)
+        then:
+        result == true
+    }
 
 }
