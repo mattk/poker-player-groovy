@@ -7,8 +7,6 @@ class PreFlopPlayer extends Player {
     static int betAmount(final game) {
         def Object me = game.players[game.in_action]
         def holeCards = me.hole_cards
-        def coolCards = countCoolCards(holeCards)
-        def ranksEqual = areRanksEqual(holeCards)
         def score = scoreHand(holeCards)
         
         if (score < 3) {
@@ -21,8 +19,16 @@ class PreFlopPlayer extends Player {
             return callAmount(game)
         }
 
+
         if (callAmount(game) < 40)
             return callAmount(game)
+
+        if(Math.random()< 0.25 && callAmount(game) < (7*game.small_blind)) {
+            return 5*game.small_blind;
+        }
+        if(score >=7 && Math.random() > 0.7) {
+            return callAmount(game)
+        }
 
         if (safeCallAmount(me.stack,callAmount(game), score))
             return callAmount(game);
