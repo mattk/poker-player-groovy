@@ -31,11 +31,24 @@ class PlayerFileTestSpock extends Specification
     {
         given:
         def gameState = new JsonSlurper().parseText(json)
-        when:
         def Object me = gameState.players[gameState.in_action]
+        when:
+        def communityCards = gameState.community_cards
+        def holeCards = me.hole_cards
         then:
-        gameState.community_cards.size == 3
-        me.hole_cards.size == 2
+        communityCards.size == 3
+        holeCards.size == 2
+    }
+
+    def "1 cool card"()
+    {
+        given:
+        def gameState = new JsonSlurper().parseText(json)
+        def Object me = gameState.players[gameState.in_action]
+        when:
+        def holeCards = me.hole_cards
+        then:
+        Player.countCoolCards(holeCards) == 2
     }
 
 }

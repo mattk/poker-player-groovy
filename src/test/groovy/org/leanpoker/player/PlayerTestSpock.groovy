@@ -5,14 +5,6 @@ import spock.lang.Specification
 
 class PlayerTestSpock extends Specification {
 
-	def "The default folding player should fold"() {
-		given:
-		def gameState = new JsonSlurper().parseText('{"key1": "value1", "key2": "value2"}')
-
-		expect:
-		Player.betRequest(gameState) == 1000
-	}
-
 	def "JsonSlurper from File"() {
         def json = new File("src/test/resources/game.json").getText()
 
