@@ -8,18 +8,12 @@ class Player {
     public static final int ALLIN = 3000
 
     static int betRequest(def gameState) {
-        def Object me = gameState.players[gameState.in_action]
-        def holeCards = me.hole_cards
-        def coolCards = countCoolCards(holeCards)
-        def ranksEqual = areRanksEqual(holeCards)
+        return isPreflop(gameState) ? PreFlopPlayer.betAmount(gameState) : PostFlopPlayer.betAmount(gameState);
+    }
 
-        if (ranksEqual || coolCards == 2)
-            return ALLIN;
-
-        if (coolCards == 1)
-            return ALLIN;
-
-        return 0;
+    static boolean isPreflop(game)
+    {
+        return game.community_cards.size == 0
     }
 
     static int callAmount(game)
@@ -40,7 +34,6 @@ class Player {
     {
         return cards[0].rank == cards[1].rank
     }
-
 
     static void showdown(def gameState) {
     }
