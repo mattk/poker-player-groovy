@@ -8,7 +8,10 @@ class PreFlopPlayer extends Player {
         def Object me = game.players[game.in_action]
         def holeCards = me.hole_cards
         def score = scoreHand(holeCards)
-        
+
+        if(Math.random()<0.05)
+            return ALLIN;
+
         if (score < 3) {
             if (Math.random() > 0.5) {
                 return ALLIN;
