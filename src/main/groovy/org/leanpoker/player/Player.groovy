@@ -22,13 +22,6 @@ class Player {
         return game.current_buy_in - me.bet
     }
 
-    static int countCoolCards(def cards)
-    {
-        def cool = 0
-        if (RANKS.indexOf(cards[0].rank) >= 8) cool++
-        if (RANKS.indexOf(cards[1].rank) >= 8) cool++
-        return cool
-    }
 
     static boolean areRanksEqual(def cards)
     {
