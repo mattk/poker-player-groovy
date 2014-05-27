@@ -25,11 +25,11 @@
             "hole_cards": [                         
                                                     
                 {
-                    "rank": "10",
+                    "rank": "3",
                     "suit": "hearts"                
                 },
                 {
-                    "rank": "J",
+                    "rank": "K",
                     "suit": "spades"
                 }
             ]

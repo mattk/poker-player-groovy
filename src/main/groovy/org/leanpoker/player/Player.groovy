@@ -11,11 +11,15 @@ class Player {
         def Object me = gameState.players[gameState.in_action]
         def holeCards = me.hole_cards
         def coolCards = countCoolCards(holeCards)
+        def ranksEqual = areRanksEqual(holeCards)
 
-        if (coolCards == 0)
-            return 0;
+        if (ranksEqual || coolCards == 2)
+            return ALLIN;
 
-        return ALLIN;
+        if (coolCards == 1)
+            return ALLIN;
+
+        return 0;
     }
 
     static int callAmount(game)
@@ -30,6 +34,11 @@ class Player {
         if (RANKS.indexOf(cards[0].rank) >= 8) cool++
         if (RANKS.indexOf(cards[1].rank) >= 8) cool++
         return cool
+    }
+
+    static boolean areRanksEqual(def cards)
+    {
+        return cards[0].rank == cards[1].rank
     }
 
 
