@@ -21,6 +21,9 @@ class PreFlopPlayer extends Player {
             return callAmount(game)
         }
 
+        if (callAmount(game) < 40)
+            return callAmount(game)
+
         if (safeCallAmount(me.stack,callAmount(game), score))
             return callAmount(game);
 
