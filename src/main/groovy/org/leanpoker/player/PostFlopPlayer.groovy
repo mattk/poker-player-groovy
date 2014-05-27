@@ -17,11 +17,11 @@ class PostFlopPlayer extends Player
 {
     static int betAmount(final game)
     {
-        if (ranking(game) > 1)
-            return ALLIN;
-        if (ranking(game) == 1)
-            return callAmount(game);
-        return 0;
+//        if (ranking(game) > 1)
+//            return ALLIN;
+//        if (ranking(game) == 1)
+//            return callAmount(game);
+        return Math.random()>0.5 ? callAmount(game):0;
     }
 
     static List allCards(game)
