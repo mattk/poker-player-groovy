@@ -16,7 +16,7 @@ class PreFlopPlayerTest extends Specification
         def result = Player.betRequest(gameState)
 
         then:
-        result == 240
+        result == 140
     }
 
     def "22 hole pair all-in"()

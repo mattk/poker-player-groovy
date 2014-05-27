@@ -25,7 +25,7 @@ class PreFlopPlayer extends Player
 
         def Object me = game.players[game.in_action]
 
-        return Math.min(me.stack/10,30.0f) < callAmount(game)
+        return Math.max(me.stack/10,30.0f) > callAmount(game)
 
 
 
