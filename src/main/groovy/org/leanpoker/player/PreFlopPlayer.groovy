@@ -14,10 +14,19 @@ class PreFlopPlayer extends Player
         if (ranksEqual || coolCards == 2)
             return ALLIN;
 
-        if (coolCards == 1)
+        if (coolCards == 1 && safeCallAmount(game))
             return callAmount(game);
 
         return 0;
+
+    }
+
+    static Boolean safeCallAmount(def game) {
+
+        def Object me = game.players[game.in_action]
+
+        return Math.min(me.stack/10,30.0f) < callAmount(game)
+
 
     }
 }
