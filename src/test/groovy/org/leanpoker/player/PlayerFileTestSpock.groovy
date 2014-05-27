@@ -11,18 +11,18 @@ class PlayerFileTestSpock extends Specification
     def "JsonSlurper from File"()
     {
         when:
-        def gameState = new JsonSlurper().parseText(json)
+        def game = new JsonSlurper().parseText(json)
 
         then:
-        gameState.small_blind == 10
+        game.small_blind == 10
     }
 
     def "I am in action"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
+        def game = new JsonSlurper().parseText(json)
         when:
-        def Object me = gameState.players[gameState.in_action]
+        def Object me = game.players[game.in_action]
         then:
         me.name == 'Bob'
     }
@@ -30,10 +30,10 @@ class PlayerFileTestSpock extends Specification
     def "All cards"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
-        def communityCards = gameState.community_cards
+        def communityCards = game.community_cards
         def holeCards = me.hole_cards
         then:
         communityCards.size == 3
@@ -43,8 +43,8 @@ class PlayerFileTestSpock extends Specification
     def "1 cool card"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         then:
@@ -54,8 +54,8 @@ class PlayerFileTestSpock extends Specification
     def "AQ is 2 cool cards"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         holeCards[0].rank = 'A'
@@ -67,8 +67,8 @@ class PlayerFileTestSpock extends Specification
     def "23 is no cool card"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         holeCards[0].rank = '2'
@@ -77,17 +77,27 @@ class PlayerFileTestSpock extends Specification
         Player.countCoolCards(holeCards) == 0
     }
 
-    def "22 hole pair all-in"()
+    def "Pre-Flop 22 hole pair all-in"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         holeCards[0].rank = '2'
         holeCards[1].rank = '2'
         then:
-        Player.betRequest(gameState) == Player.ALLIN
+        PreFlopPlayer.betAmount(game) == Player.ALLIN
     }
+    def "all cards"()
+    {
+        given:
+        def game = new JsonSlurper().parseText(json)
+        when:
+        def cards = PostFlopPlayer.allCards(game)
+        then:
+        cards.size == 5
+    }
+
 
 }
