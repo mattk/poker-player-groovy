@@ -11,9 +11,9 @@ class PreFlopPlayerTest extends Specification
     def "player bets"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
+        def game = new JsonSlurper().parseText(json)
         when:
-        def result = Player.betRequest(gameState)
+        def result = Player.betRequest(game)
 
         then:
         result == 0
@@ -22,21 +22,21 @@ class PreFlopPlayerTest extends Specification
     def "AA hole pair all-in"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         holeCards[0].rank = 'A'
         holeCards[1].rank = 'A'
         then:
-        Player.betRequest(gameState) == Player.ALLIN
+        Player.betRequest(game) == Amount.allIn(game)
     }
 
     def "1 cool card"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         then:
@@ -46,8 +46,8 @@ class PreFlopPlayerTest extends Specification
     def "AQ is 2 cool cards"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         holeCards[0].rank = 'A'
@@ -59,8 +59,8 @@ class PreFlopPlayerTest extends Specification
     def "23 is no cool card"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         holeCards[0].rank = '2'
@@ -71,8 +71,8 @@ class PreFlopPlayerTest extends Specification
     def "10-2 is ONE cool card"()
     {
         given:
-        def gameState = new JsonSlurper().parseText(json)
-        def Object me = gameState.players[gameState.in_action]
+        def game = new JsonSlurper().parseText(json)
+        def Object me = game.players[game.in_action]
         when:
         def holeCards = me.hole_cards
         holeCards[0].rank = '2'
@@ -102,7 +102,7 @@ class PreFlopPlayerTest extends Specification
         when:
         def result = PreFlopPlayer.safeCallAmount(1000, 40, 6)
         then:
-        result == true
+        result == false
     }
 
 }

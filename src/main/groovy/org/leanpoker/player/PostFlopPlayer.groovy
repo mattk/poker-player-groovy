@@ -1,56 +1,17 @@
 package org.leanpoker.player
 
-import groovy.json.JsonBuilder
-import groovy.json.JsonSlurper
-import groovyx.net.http.HTTPBuilder
-import groovyx.net.http.ContentType
-import groovyx.net.http.RESTClient
-
-import static groovyx.net.http.ContentType.JSON
-import static groovyx.net.http.ContentType.URLENC
-import static groovyx.net.http.Method.POST
-
-/**
- * @author xza
- */
 class PostFlopPlayer extends Player
 {
     static int betAmount(final game)
     {
-//        if (ranking(game) > 1)
-//            return ALLIN;
-//        if (ranking(game) == 1)
-//            return callAmount(game);
-        return Math.random()>0.5 ? callAmount(game):0;
-    }
-
-    static List allCards(game)
-    {
-        def Object me = game.players[game.in_action]
-        def communityCards = game.community_cards
-        def holeCards = me.hole_cards
-        def allCards = communityCards + holeCards
-
-        def ret = []
-        allCards.each { card ->
-            ret.add([rank: card.rank, suit: card.suit])
-        }
-
-        return ret
-    }
-
-    static Object ranking(game)
-    {
-        def cards = allCards(game)
-        def cardString = new JsonBuilder(cards).toString()
-
-        def api = new RESTClient( 'http://localhost:2048/' )
-
-        def resp = api.post(
-                body: [cards: cardString],
-                requestContentType : URLENC
-        )
-
-        return new JsonSlurper().parseText(resp.data)
+        if (Ranking.ofGame(game) > 1)
+        {
+            return Amount.allIn(game)
+        };
+        if (Ranking.ofCards(game) == 1)
+        {
+            return Amount.call(game)
+        };
+        return 0;
     }
 }

@@ -10,32 +10,32 @@ class PreFlopPlayer extends Player {
         def score = scoreHand(holeCards)
 
         if(Math.random()<0.05)
-            return ALLIN;
+            return Amount.allIn(game)(game);
 
         if (score < 3) {
             if (Math.random() > 0.5) {
-                return ALLIN;
+                return Amount.allIn(game);
             }
-            if(callAmount(game) < game.small_blind *4) {
+            if(Amount.call(game) < game.small_blind *4) {
                 return game.small_blind *4
             }
-            return callAmount(game)
+            return Amount.call(game)
         }
 
 
-        if (Math.random() < 0.8 && callAmount(game) < 40)
-            return callAmount(game)
+        if (Math.random() < 0.8 && Amount.call(game) < 40)
+            return Amount.call(game)
 
-        if(Math.random()< 0.25 && callAmount(game) < (7*game.small_blind)) {
-            return Math.min(callAmount(game),(int)(Math.random() * 0.7 * game.small_blind));
+        if(Math.random()< 0.25 && Amount.call(game) < (7*game.small_blind)) {
+            return Math.min(Amount.call(game),(int)(Math.random() * 0.7 * game.small_blind));
 
         }
         if(score <=6 && Math.random() > 0.65) {
-            return callAmount(game)
+            return Amount.call(game)
         }
 
-        if (safeCallAmount(me.stack,callAmount(game), score))
-            return callAmount(game);
+        if (safeCallAmount(me.stack,Amount.call(game), score))
+            return Amount.call(game);
 
         return 0;
 
