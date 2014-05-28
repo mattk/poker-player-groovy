@@ -32,54 +32,6 @@ class PreFlopPlayerTest extends Specification
         Player.betRequest(game) == Amount.allIn(game)
     }
 
-    def "1 cool card"()
-    {
-        given:
-        def game = new JsonSlurper().parseText(json)
-        def Object me = game.players[game.in_action]
-        when:
-        def holeCards = me.hole_cards
-        then:
-        PreFlopPlayer.countCoolCards(holeCards) == 1
-    }
-
-    def "AQ is 2 cool cards"()
-    {
-        given:
-        def game = new JsonSlurper().parseText(json)
-        def Object me = game.players[game.in_action]
-        when:
-        def holeCards = me.hole_cards
-        holeCards[0].rank = 'A'
-        holeCards[1].rank = 'Q'
-        then:
-        PreFlopPlayer.countCoolCards(holeCards) == 2
-    }
-
-    def "23 is no cool card"()
-    {
-        given:
-        def game = new JsonSlurper().parseText(json)
-        def Object me = game.players[game.in_action]
-        when:
-        def holeCards = me.hole_cards
-        holeCards[0].rank = '2'
-        holeCards[1].rank = '3'
-        then:
-        PreFlopPlayer.countCoolCards(holeCards) == 0
-    }
-    def "10-2 is ONE cool card"()
-    {
-        given:
-        def game = new JsonSlurper().parseText(json)
-        def Object me = game.players[game.in_action]
-        when:
-        def holeCards = me.hole_cards
-        holeCards[0].rank = '2'
-        holeCards[1].rank = '10'
-        then:
-        PreFlopPlayer.countCoolCards(holeCards) == 1
-    }
     def "safe call amount"() {
         when:
         def result = PreFlopPlayer.safeCallAmount(1000, 300, 1)
