@@ -4,8 +4,6 @@ class Player {
 
     static final String VERSION = 'V 2';
 
-    public static final int ALLIN = 3000
-
     static int betRequest(def gameState) {
         return isPreflop(gameState) ? PreFlopPlayer.betAmount(gameState) : PostFlopPlayer.betAmount(gameState);
     }
@@ -14,14 +12,6 @@ class Player {
     {
         return game.community_cards.size == 0
     }
-
-    static int callAmount(game)
-    {
-        def Object me = game.players[game.in_action]
-        return game.current_buy_in - me.bet
-    }
-
-
 
     static void showdown(def gameState) {
     }
